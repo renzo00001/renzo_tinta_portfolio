@@ -1,0 +1,14 @@
+:root{--network-ink:0,0,0}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--network-ink:255,255,255}}
+:root[data-theme="dark"]{--network-ink:255,255,255}
+body{isolation:isolate}
+.ambient-network{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+:root[data-motion-enabled="true"] .data-scene .data-packet{animation:packet-travel 5s var(--ease) infinite!important;animation-play-state:paused!important}
+:root[data-motion-enabled="true"] .data-scene.is-running .data-packet{animation-play-state:running!important}
+:root[data-motion-enabled="true"] .data-scene .packet-b{animation-delay:-1.6s!important}
+:root[data-motion-enabled="true"] .data-scene .packet-c{animation-delay:-3.3s!important}
+:root[data-motion-enabled="true"] .data-scene .packet-out{animation-delay:-2.5s!important}
+:root[data-motion-enabled="true"] .data-scene .packet-second{animation-delay:-.8s!important}
+:root[data-motion-enabled="true"] .data-scene .core-ring{animation:core-orbit 24s var(--ease) infinite!important;animation-play-state:paused!important}
+:root[data-motion-enabled="true"] .data-scene.is-running .core-ring{animation-play-state:running!important}
+@media(max-width:900px){:root[data-motion-enabled="true"] .data-scene .data-packet{animation-duration:7s!important}}

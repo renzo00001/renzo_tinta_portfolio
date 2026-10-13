@@ -3,10 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pipeline de datos de SAP a MotherDuck · Renzo Tinta</title>
+<title>De SAP a MotherDuck · Renzo Tinta</title>
 <meta name="description" content="Pipeline de datos con extracción paralela desde SAP GUI, Python, Polars, MotherDuck (DuckDB) y Streamlit: orquestación, cargas transaccionales y proyección operativa diaria.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="De SAP a MotherDuck · Renzo Tinta">
+<meta property="og:description" content="Pipeline de datos con extracción paralela desde SAP GUI, Python, Polars, MotherDuck (DuckDB) y Streamlit: orquestación, cargas transaccionales y proyección operativa diaria.">
+<meta property="og:image" content="../assets/images/social-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Renzo Tinta · Junior Data Engineer · Pipelines en producción">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#07090D" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#181818" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#F6F7F9" media="(prefers-color-scheme: light)">
 <script>
   (function () {
@@ -21,14 +29,15 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230F766E'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='monospace' font-size='14' font-weight='700' fill='white'%3E%3E_%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&display=swap">
 <link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/refinements.css">
+<link rel="stylesheet" href="../assets/css/data-motion.css">
+<link rel="stylesheet" href="../assets/css/ambient-network.css">
 </head>
 <body>
 <a class="skip-link" href="#main" data-i18n="skip">Saltar al contenido</a>
 <div class="progress" aria-hidden="true"><span></span></div>
-<div class="draft-banner" role="note" data-i18n="draft">Borrador: los textos marcados con ◌ están pendientes de confirmar.</div>
-
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">&gt;_</span><span data-i18n="brand">Renzo Tinta</span></a>
@@ -62,9 +71,9 @@
     <div class="container">
       <a class="crumb" href="../index.html#projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span data-i18n="back_projects">Todos los proyectos</span></a>
       <p class="section-index" data-reveal="hero" data-i18n="pb_eyebrow">Proyecto B · Ingeniería de datos y automatización (RPA)</p>
-      <h1 class="page-title" id="page-title" data-i18n="pb_title">Pipeline de datos de SAP a MotherDuck con extracción paralela</h1>
+      <h1 class="page-title" id="page-title" data-i18n="pb_title">De SAP a MotherDuck</h1>
       <p data-reveal="hero"><span class="badge badge--ok" data-i18n="st_prod">En producción</span></p>
-      <p class="lead" data-reveal="hero" data-i18n="pb_sum">Automatiza la descarga de 7 reportes de SAP en sesiones paralelas, carga los datos en MotherDuck con transacciones y validaciones, y genera la proyección operativa diaria que consume un dashboard en Streamlit.</p>
+      <p class="lead" data-reveal="hero" data-i18n="pb_sum">Extracción de 7 reportes de SAP, cargas validadas en MotherDuck y una proyección diaria en Streamlit. Ejecución aproximada: de 30 a 5 minutos.</p>
       <ol class="chain" aria-label="Flujo del pipeline" data-i18n-aria="pb_chain_label" data-reveal="hero">
         <li><span class="tile tile--sm" data-icon="sap"></span><span class="chain-label">SAP</span></li>
         <li><span class="tile tile--sm" data-icon="python"></span><span class="chain-label">Python</span></li>
@@ -76,8 +85,10 @@
       </ol>
       <p class="role-note" data-reveal="hero" data-i18n="pb_private">Código privado; disponible para revisión en entrevista.</p>
       <div class="hero-actions" data-reveal="hero">
-        <a class="btn btn--primary" href="#architecture" data-magnetic><span data-i18n="p_arch">Ver arquitectura</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn--primary" href="#architecture" ><span data-i18n="p_arch">Ver arquitectura</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
+      <dl class="case-facts card"><div><dt data-i18n="contribution">Mi contribución</dt><dd data-i18n="case_sap">Extracción paralela, transformación, cargas validadas y dashboard operativo.</dd></div><div><dt data-i18n="context">Contexto</dt><dd data-i18n="case_context">Operaciones de retail · Cencosud</dd></div></dl>
+      <div class="measurement-note"><strong data-i18n="measurement">Alcance de la medición</strong><p data-i18n="measurement_sap">Aproximadamente 30 minutos de revisión manual frente a 5 minutos por ejecución del robot. El robot cubre un flujo más amplio.</p></div>
       <div class="glance" data-stagger>
         <div><strong data-i18n="pb_g1_n">~30 → ~5 min</strong><span data-i18n="pb_g1_l">por ejecución: manual frente al RPA</span></div>
         <div><strong data-i18n="pb_g2_n">5 sesiones</strong><span data-i18n="pb_g2_l">de SAP GUI en paralelo, cada una en su propio proceso</span></div>
@@ -91,13 +102,12 @@
     <aside class="toc" aria-label="Índice" data-i18n-aria="toc_title" data-spy>
       <p data-i18n="toc_title">En esta página</p>
       <div class="toc-links">
-        <a href="#problem" data-i18n="pe_problem">El Problema</a>
-        <a href="#process" data-i18n="pe_process">El Proceso</a>
-        <a href="#solution" data-i18n="pe_solution">La Solución</a>
+        <a href="#problem" data-i18n="pe_problem">Problema</a>
+        <a href="#solution" data-i18n="pe_solution">Solución</a>
         <a href="#architecture" data-i18n="sec_arch">Arquitectura técnica</a>
         <a href="#parallel" data-i18n="sec_parallel">Extracción en paralelo</a>
-        <a href="#dashboard" data-i18n="sec_shots" data-needs="dashboard" hidden>Capturas del dashboard</a>
-        <a href="#impact" data-i18n="pe_impact">El Impacto</a>
+        <a href="#impact" data-i18n="pe_impact">Resultados y validación</a>
+        <a href="#process" data-i18n="pe_process">Decisiones técnicas</a>
         <a href="#quality" data-i18n="sec_quality">Calidad de datos y pruebas</a>
         <a href="#repo" data-i18n="sec_code">Estructura del código</a>
         <a href="#limits" data-i18n="pe_limits">Limitaciones</a>
@@ -107,28 +117,14 @@
     <article class="doc-body prose">
 
       <section id="problem" aria-labelledby="h-problem" data-reveal>
-        <h2 id="h-problem"><span data-i18n="pe_problem">El Problema</span> <small data-i18n="pe_problem_s">El contexto</small></h2>
+        <h2 id="h-problem"><span data-i18n="pe_problem">Problema</span> <small data-i18n="pe_problem_s">El contexto</small></h2>
         <p data-i18n="pb_problem1">Un centro de distribución necesita saber cada día cuántas líneas de órdenes de traslado hay que preparar, cuánto valen y en qué estado están: pendientes, con entrega generada o ya trabajadas.</p>
         <p data-i18n="pb_problem2">Esa información está repartida en 7 reportes de SAP, y la salida de uno es la entrada del siguiente. A mano implicaría ejecutar cada transacción, exportarla, copiar listas de un reporte a otro y cruzar todo en Excel con precios, unidades de medida y datos maestros.</p>
         <p data-i18n="pb_problem3">No existía un reporte que cubriera todo el flujo. Un equipo del centro de distribución revisaba a mano solo las órdenes con entrega generada, una vez al día y en unos 30 minutos. El RPA sigue el flujo completo: orden de traslado → entrega → HU.</p>
       </section>
 
-      <section id="process" aria-labelledby="h-process" data-reveal>
-        <h2 id="h-process"><span data-i18n="pe_process">El Proceso</span> <small data-i18n="pe_process_s">Cómo pensé</small></h2>
-        <ul class="bullets">
-          <li data-i18n="pb_proc0">Descarté la macro de VBA: había que conocer el historial de cada pedido, y una base de datos es más adecuada que archivos Excel.</li>
-          <li data-i18n="pb_proc1">Extracción en paralelo: cada transacción de SAP corre en un proceso independiente con su propia sesión de SAP GUI. Elegí procesos y no hilos porque SAP GUI Scripting usa COM; además, un proceso bloqueado se puede detener sin afectar a los demás.</li>
-          <li data-i18n="pb_proc2">Un orquestador controla las dependencias entre reportes, el tiempo máximo por transacción y un reintento en otra sesión.</li>
-          <li data-i18n="pb_proc3">Cargas idempotentes: se borra la ventana de fechas y se vuelve a insertar, o se insertan solo los registros nuevos. Reintentar no duplica datos.</li>
-          <li data-i18n="pb_proc4">Una transacción por base de datos, con rollback si algo falla: nunca quedan tablas a medias.</li>
-          <li data-i18n="pb_proc5">Separé una capa reutilizable (conexión a SAP, orquestación, cargas y avisos) del proceso concreto, para que un nuevo robot pueda aprovecharla sin modificarla.</li>
-          <li data-i18n="pb_proc6">Los tokens de MotherDuck y Power Automate se leen desde un archivo .env, fuera del código y del repositorio.</li>
-          <li data-i18n="pb_proc7">Elegí MotherDuck porque ya conocía DuckDB y, además de funcionar como almacén de datos, permite generar dashboards con Dives. Planeo profundizar en Flights.</li>
-        </ul>
-      </section>
-
       <section id="solution" aria-labelledby="h-solution" data-reveal>
-        <h2 id="h-solution"><span data-i18n="pe_solution">La Solución</span> <small data-i18n="pe_solution_s">Qué resolví</small></h2>
+        <h2 id="h-solution"><span data-i18n="pe_solution">Solución</span> <small data-i18n="pe_solution_s">Qué resolví</small></h2>
         <ol class="steps">
           <li data-i18n="pb_s1">El orquestador abre hasta 5 sesiones de SAP GUI y lanza un worker por transacción: primero los pedidos de la ventana de fechas y las entregas; con esa lista, el resto de reportes en paralelo.</li>
           <li data-i18n="pb_s2">Polars lee los archivos TXT por posición de columna (los nombres cambian entre versiones de SAP) y convierte los tipos de forma explícita.</li>
@@ -233,29 +229,10 @@
         </figure>
       </section>
 
-      <section id="dashboard" aria-labelledby="h-dashboard" data-gallery hidden>
-        <h2 id="h-dashboard" data-i18n="sec_shots">Capturas del dashboard</h2>
-        <p data-i18n="shots_intro">Interfaz del dashboard ejecutivo en Streamlit.</p>
-        <div class="shots">
-          <figure>
-            <a href="../assets/img/dashboard/01-indicadores.png" target="_blank" rel="noopener"><img src="../assets/img/dashboard/01-indicadores.png" alt="Captura del dashboard con los indicadores de líneas e importes y sus barras de generado y pendiente." data-i18n-alt="shot1_alt" decoding="async"></a>
-            <figcaption data-i18n="shot1_cap">Indicadores principales: generado vs. pendiente.</figcaption>
-          </figure>
-          <figure>
-            <a href="../assets/img/dashboard/02-ritmo-brecha.png" target="_blank" rel="noopener"><img src="../assets/img/dashboard/02-ritmo-brecha.png" alt="Captura del dashboard con el gráfico de ritmo por periodo y la brecha acumulada." data-i18n-alt="shot2_alt" decoding="async"></a>
-            <figcaption data-i18n="shot2_cap">Ritmo diario, semanal o mensual y brecha acumulada.</figcaption>
-          </figure>
-          <figure>
-            <a href="../assets/img/dashboard/03-desgloses.png" target="_blank" rel="noopener"><img src="../assets/img/dashboard/03-desgloses.png" alt="Captura del dashboard con los desgloses por gerencia y por unidad de negocio." data-i18n-alt="shot3_alt" decoding="async"></a>
-            <figcaption data-i18n="shot3_cap">Desglose por gerencia y unidad de negocio.</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section id="impact" aria-labelledby="h-impact" data-reveal>
-        <h2 id="h-impact"><span data-i18n="pe_impact">El Impacto</span> <small data-i18n="pe_impact_s">Resultados y evidencia</small></h2>
+<section id="impact" aria-labelledby="h-impact" data-reveal>
+        <h2 id="h-impact"><span data-i18n="pe_impact">Resultados y validación</span> <small data-i18n="pe_impact_s">Resultados y evidencia</small></h2>
         <div class="impact-grid">
-          <article class="card kpi" data-spotlight>
+          <article class="card kpi" >
             <p class="kpi-num">−83<small>%</small></p>
             <p class="kpi-label" data-i18n="kpi_b1_l">tiempo por ejecución (de ~30 min a ~5 min)</p>
             <p class="kpi-note" data-i18n="kpi_b1_c">Valores aproximados. La revisión manual solo cubría las órdenes con entrega; el RPA cubre todo el flujo.</p>
@@ -264,7 +241,7 @@
               <div class="bar-row"><span>RPA</span><span class="bar bar--accent"><i style="--w:16.7%" data-bar data-delay=".25"></i></span><b>~5 min</b></div>
             </div>
           </article>
-          <article class="card kpi" data-spotlight>
+          <article class="card kpi" >
             <p class="kpi-num" data-i18n="kpi_b2_n">1 → varias</p>
             <p class="kpi-label" data-i18n="kpi_b2_l">ejecuciones al día</p>
             <p class="kpi-note" data-i18n="kpi_b2_c">Por su duración, el proceso manual se hacía solo una vez al día; el RPA puede ejecutarse varias veces.</p>
@@ -274,6 +251,20 @@
         <p data-i18n="pb_impact2">Además, automatiza de punta a punta la descarga y el cruce de 7 reportes de SAP, y avisa del resultado sin que nadie tenga que revisarlo.</p>
         <p data-i18n="pb_impact3">Uso actual: el dashboard lo usa la gerencia de Non Food y Supply Chain. A futuro lo verán las demás gerencias, a medida que se trabajen las lógicas que necesita cada una.</p>
         
+      </section>
+
+      <section id="process" aria-labelledby="h-process" data-reveal>
+        <h2 id="h-process"><span data-i18n="pe_process">Decisiones técnicas</span> <small data-i18n="pe_process_s">Cómo pensé</small></h2>
+        <ul class="bullets">
+          <li data-i18n="pb_proc0">Descarté la macro de VBA: había que conocer el historial de cada pedido, y una base de datos es más adecuada que archivos Excel.</li>
+          <li data-i18n="pb_proc1">Extracción en paralelo: cada transacción de SAP corre en un proceso independiente con su propia sesión de SAP GUI. Elegí procesos y no hilos porque SAP GUI Scripting usa COM; además, un proceso bloqueado se puede detener sin afectar a los demás.</li>
+          <li data-i18n="pb_proc2">Un orquestador controla las dependencias entre reportes, el tiempo máximo por transacción y un reintento en otra sesión.</li>
+          <li data-i18n="pb_proc3">Cargas idempotentes: se borra la ventana de fechas y se vuelve a insertar, o se insertan solo los registros nuevos. Reintentar no duplica datos.</li>
+          <li data-i18n="pb_proc4">Una transacción por base de datos, con rollback si algo falla: nunca quedan tablas a medias.</li>
+          <li data-i18n="pb_proc5">Separé una capa reutilizable (conexión a SAP, orquestación, cargas y avisos) del proceso concreto, para que un nuevo robot pueda aprovecharla sin modificarla.</li>
+          <li data-i18n="pb_proc6">Los tokens de MotherDuck y Power Automate se leen desde un archivo .env, fuera del código y del repositorio.</li>
+          <li data-i18n="pb_proc7">Elegí MotherDuck porque ya conocía DuckDB y, además de funcionar como almacén de datos, permite generar dashboards con Dives. Planeo profundizar en Flights.</li>
+        </ul>
       </section>
 
       <section id="quality" aria-labelledby="h-quality" data-reveal>
@@ -316,10 +307,11 @@
         </ul>
       </section>
 
+      <section class="case-contact card"><h2 data-i18n="case_cta">¿Quieres conversar sobre este proyecto?</h2><p data-i18n="case_cta_body">Puedo explicar la arquitectura, las decisiones y las limitaciones en una entrevista.</p><a class="btn btn--primary" href="https://www.linkedin.com/in/renzo-tinta-data/" target="_blank" rel="noopener" data-i18n="talk">Contactar por LinkedIn</a></section>
       <nav aria-label="Proyectos" data-reveal>
-        <a class="card next-card" href="gcp-pipeline.html" data-spotlight>
+        <a class="card next-card" href="gcp-pipeline.html" >
           <small data-i18n="p_prev">Proyecto anterior</small>
-          <strong><span data-i18n="pa_title">Pipeline de datos en GCP</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></strong>
+          <strong><span data-i18n="pa_title">Pipeline operativo en Google Cloud</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></strong>
         </a>
       </nav>
     </article>
@@ -329,6 +321,7 @@
 <footer>
   <div class="container footer-inner">
     <span data-i18n="footer">© Renzo Tinta Mendoza · Los resultados publicados provienen de mediciones propias.</span>
+    <a href="../privacy.html" data-i18n="privacy">Privacidad</a>
     <a href="#main"><span data-i18n="back_top">Volver arriba</span> <span aria-hidden="true">↑</span></a>
   </div>
 </footer>
@@ -337,9 +330,7 @@
 <script src="../assets/js/i18n/common.js"></script>
 <script src="../assets/js/i18n/sap-motherduck-pipeline.js"></script>
 <script src="../assets/js/site.js"></script>
-<script src="../assets/vendor/gsap/gsap.min.js"></script>
-<script src="../assets/vendor/gsap/ScrollTrigger.min.js"></script>
-<script src="../assets/vendor/gsap/SplitText.min.js"></script>
-<script src="../assets/js/motion.js"></script>
+<script src="../assets/js/ambient-network.js"></script>
+<script src="../assets/js/page-motion.js"></script>
 </body>
 </html>

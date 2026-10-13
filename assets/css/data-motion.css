@@ -1,0 +1,40 @@
+/* Movement supports the existing editorial layout. */
+.data-scene{margin:24px 0 0;color:var(--accent);perspective:800px;overflow:hidden;border-radius:8px;background:var(--bg-2)}
+.data-scene svg{width:100%;height:auto;transform:rotateX(var(--scene-rx,0deg)) rotateY(var(--scene-ry,0deg));transition:transform 700ms var(--ease)}
+.scene-depth{transform:translate(var(--scene-x,0px),var(--scene-y,0px));transition:transform 700ms var(--ease)}
+.scene-grid{transform:translate(calc(var(--scene-x,0px)*.4),calc(var(--scene-y,0px)*.4))}
+.scene-tracks{opacity:.4}.scene-source{color:var(--muted)}
+.data-packet{offset-rotate:0deg;animation:packet-travel 5s var(--ease) infinite;animation-play-state:paused;opacity:0}
+.packet-a{offset-path:path('M55 48C115 48 125 90 198 90')}
+.packet-b{offset-path:path('M48 90H198');animation-delay:-1.6s}
+.packet-c{offset-path:path('M55 132C115 132 125 90 198 90');animation-delay:-3.3s}
+.packet-out{offset-path:path('M242 90H370');animation-delay:-2.5s}
+.packet-second{animation-delay:-.8s}
+.core-ring{transform-origin:220px 90px;animation:core-orbit 24s var(--ease) infinite;animation-play-state:paused}
+.is-running .data-packet,.is-running .core-ring{animation-play-state:running}
+.is-static .data-packet{animation:none;opacity:0}
+.scene-toggle{display:block;margin-top:16px;padding:8px 0;border:0;background:none;color:var(--muted);font:500 12px/16px var(--font-sans);cursor:pointer;text-decoration:underline;text-underline-offset:4px;transition:color 700ms var(--ease)}
+.scene-toggle:hover{color:var(--accent)}.scene-toggle:active{transform:translateY(1px)}
+.preview-steps{margin-block:24px}.pipeline-preview{transform-style:preserve-3d}
+.brand{white-space:nowrap}
+@media(max-width:600px){.header-inner{padding:8px 12px;gap:8px}.brand{gap:4px;font-size:14px}.brand-mark{width:28px;height:28px}.controls{gap:4px}}
+@media(max-width:380px){.brand-mark{display:none}.header-inner{padding:8px}.controls .icon-btn{width:32px;height:32px}.seg button{min-width:32px;padding-inline:8px}.hero-actions{gap:16px}}
+.project-card{transition:transform 700ms var(--ease),box-shadow 700ms var(--ease),border-color 700ms var(--ease)}
+@media(hover:hover) and (pointer:fine){.project-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-2);border-color:var(--line-strong)}}
+.arch,.deps-fig{position:relative;isolation:isolate}.diagram-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:-1;color:var(--accent)}
+.diagram-path{stroke:currentColor;stroke-width:1.5;fill:none;opacity:.4}
+.diagram-enhanced .nodes>.node:not(:last-child)::after{display:none}
+.diagram-animate .diagram-path{stroke-dasharray:1;stroke-dashoffset:1;animation:connection-draw 900ms var(--ease) both;animation-delay:var(--edge-delay,0ms)}
+.diagram-animate .node,.diagram-animate .task,.diagram-animate .arch-foot>.lane:last-child{animation:node-signal 1200ms var(--ease) both;animation-delay:var(--node-delay,0ms)}
+.diagram-animate .diagram-path,.diagram-animate .node,.diagram-animate .task,.diagram-animate .arch-foot>.lane:last-child{animation-play-state:var(--diagram-play-state,running)}
+.bar.motion-bar>i{transition:transform 1000ms var(--ease);transform-origin:left;transform:scaleX(0)}
+.bar.motion-bar.is-filled>i{transform:scaleX(1)}
+.bar.motion-bar>i{transition-delay:var(--bar-delay,0ms)}
+.hero-intro{animation:hero-arrive 900ms var(--ease) both;animation-delay:var(--intro-delay,0ms)}
+@keyframes packet-travel{0%{offset-distance:0%;opacity:0}12%{opacity:.85}85%{opacity:.85}100%{offset-distance:100%;opacity:0}}
+@keyframes core-orbit{to{transform:rotate(360deg)}}
+@keyframes connection-draw{to{stroke-dashoffset:0}}
+@keyframes node-signal{0%,100%{border-color:var(--line)}45%{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 10%,transparent)}}
+@keyframes hero-arrive{from{opacity:.3;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(max-width:900px){.data-scene{max-width:440px}.packet-a,.packet-c{display:none}.data-packet{animation-duration:7s}.data-scene svg,.scene-depth{transform:none}}
+@media(prefers-reduced-motion:reduce){.data-packet,.core-ring,.hero-intro,.diagram-animate .diagram-path,.diagram-animate .node,.diagram-animate .task,.diagram-animate .arch-foot>.lane:last-child{animation:none!important}.data-packet{opacity:0}.diagram-animate .diagram-path{stroke-dashoffset:0}.bar.motion-bar>i{transform:none;transition:none}.data-scene svg,.scene-depth,.project-card:hover{transform:none}.scene-toggle{display:none}}

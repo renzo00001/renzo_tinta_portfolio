@@ -41,6 +41,10 @@
     if (d.doc_title) document.title = d.doc_title;
     const md = document.querySelector('meta[name="description"]');
     if (md && d.meta_desc) md.setAttribute("content", d.meta_desc);
+    const socialTitle = document.querySelector('meta[property="og:title"]');
+    const socialDescription = document.querySelector('meta[property="og:description"]');
+    if (socialTitle) socialTitle.setAttribute("content", document.title);
+    if (socialDescription && md) socialDescription.setAttribute("content", md.content);
     document.querySelectorAll("[data-i18n]").forEach(el => {
       const v = d[el.dataset.i18n];
       if (v === undefined) return;
@@ -98,6 +102,12 @@
     nav.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
     document.addEventListener("keydown", e => {
       if (e.key === "Escape" && root.classList.contains("nav-open")) setMenu(false, true);
+      if (e.key === "Tab" && root.classList.contains("nav-open")) {
+        const controls = [...nav.querySelectorAll('a[href]'), menuBtn];
+        const first = controls[0], last = controls[controls.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
     matchMedia("(min-width: 901px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
     listeners.push(() => setMenu(root.classList.contains("nav-open")));
