@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline de datos de SAP a MotherDuck · Renzo Tinta</title>
+<meta name="description" content="Pipeline de datos con extracción paralela desde SAP GUI, Python, Polars, MotherDuck (DuckDB) y Streamlit: orquestación, cargas transaccionales y proyección operativa diaria.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#07090D" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F6F7F9" media="(prefers-color-scheme: light)">
+<script>
+  (function () {
+    var d = document.documentElement; d.classList.add("js");
+    try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") d.dataset.theme = t; } catch (e) {}
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      d.classList.add("motion");
+      setTimeout(function () { if (!window.__motionReady) d.classList.remove("motion"); }, 2500);
+    }
+  })();
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230F766E'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='monospace' font-size='14' font-weight='700' fill='white'%3E%3E_%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="skip">Saltar al contenido</a>
+<div class="progress" aria-hidden="true"><span></span></div>
+<div class="draft-banner" role="note" data-i18n="draft">Borrador: los textos marcados con ◌ están pendientes de confirmar.</div>
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">&gt;_</span><span data-i18n="brand">Renzo Tinta</span></a>
+    <nav class="nav" id="site-nav" aria-label="Principal" data-i18n-aria="nav_label">
+      <span class="nav-indicator" aria-hidden="true"></span>
+      <a href="../index.html#about" data-i18n="nav_about">Sobre mí</a>
+      <a href="../index.html#stack" data-i18n="nav_stack">Stack</a>
+      <a href="../index.html#projects" aria-current="page" data-i18n="nav_projects">Proyectos</a>
+      <a href="../index.html#approach" data-i18n="nav_approach">Enfoque</a>
+      <a href="../index.html#experience" data-i18n="nav_experience">Experiencia</a>
+      <a href="../index.html#contact" data-i18n="nav_contact">Contacto</a>
+    </nav>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Idioma" data-i18n-aria="lang_label" data-active="es">
+        <span class="seg-thumb" aria-hidden="true"></span>
+        <button type="button" data-lang="es" aria-pressed="true" lang="es">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+      <button type="button" class="icon-btn theme-btn" id="theme" aria-label="Cambiar tema" data-i18n-aria="theme_label">
+        <svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú"><span aria-hidden="true"></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="container">
+      <a class="crumb" href="../index.html#projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span data-i18n="back_projects">Todos los proyectos</span></a>
+      <p class="section-index" data-reveal="hero" data-i18n="pb_eyebrow">Proyecto B · Ingeniería de datos y automatización (RPA)</p>
+      <h1 class="page-title" id="page-title" data-i18n="pb_title">Pipeline de datos de SAP a MotherDuck con extracción paralela</h1>
+      <p data-reveal="hero"><span class="badge badge--ok" data-i18n="st_prod">En producción</span></p>
+      <p class="lead" data-reveal="hero" data-i18n="pb_sum">Automatiza la descarga de 7 reportes de SAP en sesiones paralelas, carga los datos en MotherDuck con transacciones y validaciones, y genera la proyección operativa diaria que consume un dashboard en Streamlit.</p>
+      <ol class="chain" aria-label="Flujo del pipeline" data-i18n-aria="pb_chain_label" data-reveal="hero">
+        <li><span class="tile tile--sm" data-icon="sap"></span><span class="chain-label">SAP</span></li>
+        <li><span class="tile tile--sm" data-icon="python"></span><span class="chain-label">Python</span></li>
+        <li><span class="tile tile--sm" data-icon="polars"></span><span class="chain-label">Polars</span></li>
+        <li><span class="tile tile--sm" data-icon="motherduck"></span><span class="chain-label">MotherDuck</span></li>
+        <li><span class="tile tile--sm" data-icon="sql"></span><span class="chain-label">SQL</span></li>
+        <li><span class="tile tile--sm" data-icon="streamlit"></span><span class="chain-label">Streamlit</span></li>
+        <li><span class="tile tile--sm" data-icon="powerautomate"></span><span class="chain-label">Teams</span></li>
+      </ol>
+      <p class="role-note" data-reveal="hero" data-i18n="pb_private">Código privado; disponible para revisión en entrevista.</p>
+      <div class="hero-actions" data-reveal="hero">
+        <a class="btn btn--primary" href="#architecture" data-magnetic><span data-i18n="p_arch">Ver arquitectura</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="glance" data-stagger>
+        <div><strong data-i18n="pb_g1_n">~30 → ~5 min</strong><span data-i18n="pb_g1_l">por ejecución: manual frente al RPA</span></div>
+        <div><strong data-i18n="pb_g2_n">5 sesiones</strong><span data-i18n="pb_g2_l">de SAP GUI en paralelo, cada una en su propio proceso</span></div>
+        <div><strong data-i18n="pb_g3_n">43 pruebas</strong><span data-i18n="pb_g3_l">automatizadas que se ejecutan sin SAP</span></div>
+        <div><strong>Non Food · Supply Chain</strong><span data-i18n="pb_g4_l">gerencias que usan hoy el dashboard</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container doc">
+    <aside class="toc" aria-label="Índice" data-i18n-aria="toc_title" data-spy>
+      <p data-i18n="toc_title">En esta página</p>
+      <div class="toc-links">
+        <a href="#problem" data-i18n="pe_problem">El Problema</a>
+        <a href="#process" data-i18n="pe_process">El Proceso</a>
+        <a href="#solution" data-i18n="pe_solution">La Solución</a>
+        <a href="#architecture" data-i18n="sec_arch">Arquitectura técnica</a>
+        <a href="#parallel" data-i18n="sec_parallel">Extracción en paralelo</a>
+        <a href="#dashboard" data-i18n="sec_shots" data-needs="dashboard" hidden>Capturas del dashboard</a>
+        <a href="#impact" data-i18n="pe_impact">El Impacto</a>
+        <a href="#quality" data-i18n="sec_quality">Calidad de datos y pruebas</a>
+        <a href="#repo" data-i18n="sec_code">Estructura del código</a>
+        <a href="#limits" data-i18n="pe_limits">Limitaciones</a>
+      </div>
+    </aside>
+
+    <article class="doc-body prose">
+
+      <section id="problem" aria-labelledby="h-problem" data-reveal>
+        <h2 id="h-problem"><span data-i18n="pe_problem">El Problema</span> <small data-i18n="pe_problem_s">El contexto</small></h2>
+        <p data-i18n="pb_problem1">Un centro de distribución necesita saber cada día cuántas líneas de órdenes de traslado hay que preparar, cuánto valen y en qué estado están: pendientes, con entrega generada o ya trabajadas.</p>
+        <p data-i18n="pb_problem2">Esa información está repartida en 7 reportes de SAP, y la salida de uno es la entrada del siguiente. A mano implicaría ejecutar cada transacción, exportarla, copiar listas de un reporte a otro y cruzar todo en Excel con precios, unidades de medida y datos maestros.</p>
+        <p data-i18n="pb_problem3">No existía un reporte que cubriera todo el flujo. Un equipo del centro de distribución revisaba a mano solo las órdenes con entrega generada, una vez al día y en unos 30 minutos. El RPA sigue el flujo completo: orden de traslado → entrega → HU.</p>
+      </section>
+
+      <section id="process" aria-labelledby="h-process" data-reveal>
+        <h2 id="h-process"><span data-i18n="pe_process">El Proceso</span> <small data-i18n="pe_process_s">Cómo pensé</small></h2>
+        <ul class="bullets">
+          <li data-i18n="pb_proc0">Descarté la macro de VBA: había que conocer el historial de cada pedido, y una base de datos es más adecuada que archivos Excel.</li>
+          <li data-i18n="pb_proc1">Extracción en paralelo: cada transacción de SAP corre en un proceso independiente con su propia sesión de SAP GUI. Elegí procesos y no hilos porque SAP GUI Scripting usa COM; además, un proceso bloqueado se puede detener sin afectar a los demás.</li>
+          <li data-i18n="pb_proc2">Un orquestador controla las dependencias entre reportes, el tiempo máximo por transacción y un reintento en otra sesión.</li>
+          <li data-i18n="pb_proc3">Cargas idempotentes: se borra la ventana de fechas y se vuelve a insertar, o se insertan solo los registros nuevos. Reintentar no duplica datos.</li>
+          <li data-i18n="pb_proc4">Una transacción por base de datos, con rollback si algo falla: nunca quedan tablas a medias.</li>
+          <li data-i18n="pb_proc5">Separé una capa reutilizable (conexión a SAP, orquestación, cargas y avisos) del proceso concreto, para que un nuevo robot pueda aprovecharla sin modificarla.</li>
+          <li data-i18n="pb_proc6">Los tokens de MotherDuck y Power Automate se leen desde un archivo .env, fuera del código y del repositorio.</li>
+          <li data-i18n="pb_proc7">Elegí MotherDuck porque ya conocía DuckDB y, además de funcionar como almacén de datos, permite generar dashboards con Dives. Planeo profundizar en Flights.</li>
+        </ul>
+      </section>
+
+      <section id="solution" aria-labelledby="h-solution" data-reveal>
+        <h2 id="h-solution"><span data-i18n="pe_solution">La Solución</span> <small data-i18n="pe_solution_s">Qué resolví</small></h2>
+        <ol class="steps">
+          <li data-i18n="pb_s1">El orquestador abre hasta 5 sesiones de SAP GUI y lanza un worker por transacción: primero los pedidos de la ventana de fechas y las entregas; con esa lista, el resto de reportes en paralelo.</li>
+          <li data-i18n="pb_s2">Polars lee los archivos TXT por posición de columna (los nombres cambian entre versiones de SAP) y convierte los tipos de forma explícita.</li>
+          <li data-i18n="pb_s3">Los datos se cargan en tablas de staging de MotherDuck dentro de una transacción.</li>
+          <li data-i18n="pb_s4">Si faltan días de ajuste o datos maestros, se descargan reportes complementarios de SAP.</li>
+          <li data-i18n="pb_s5">Una consulta SQL con CTEs genera la proyección operativa diaria: una fila por línea de pedido, con importe, fecha de entrega ajustada, gerencia y estado.</li>
+          <li data-i18n="pb_s6">Al terminar, Power Automate avisa en Microsoft Teams si el resultado fue correcto, parcial o con error.</li>
+          <li data-i18n="pb_s7">Streamlit consume la tabla final: KPIs, generado vs. pendiente, ritmo diario/semanal/mensual, brecha acumulada, desglose por gerencia y unidad de negocio, filtros y exportación a Excel.</li>
+        </ol>
+        <p class="note" data-i18n="pb_split">El robot también se empaqueta como .exe con PyInstaller para ejecutarlo en equipos sin Python.</p>
+      </section>
+
+      <section id="architecture" aria-labelledby="h-arch" data-reveal>
+        <h2 id="h-arch" data-i18n="sec_arch">Arquitectura técnica</h2>
+        <figure class="card arch">
+          <figcaption data-i18n="arch_intro">Tres zonas: el robot en un equipo Windows, el almacenamiento en MotherDuck y el consumo en Streamlit. El dashboard solo lee la tabla final.</figcaption>
+
+          <div class="lane">
+            <h3 data-i18n="lane_rpa">PC Windows · robot en Python</h3>
+            <ol class="nodes" style="--cols:3">
+              <li class="node"><span class="tile tile--sm" data-icon="python"></span><strong data-i18n="b1t">Orquestador</strong><span data-i18n="b1d">Un subproceso por transacción: dependencias, tiempo máximo y reintento</span></li>
+              <li class="node"><span class="tile tile--sm" data-icon="sap"></span><strong data-i18n="b2t">Workers · SAP GUI</strong><span data-i18n="b2d">Hasta 5 sesiones a la vez; cada worker usa la suya y exporta un TXT</span></li>
+              <li class="node"><span class="tile tile--sm" data-icon="polars"></span><strong data-i18n="b3t">Lectores en Polars</strong><span data-i18n="b3d">TXT a DataFrame por posición, con tipos explícitos</span></li>
+            </ol>
+            <p class="lane-note" data-i18n="lane_rpa_note">Mutex de Windows: un solo robot usa SAP y un solo worker usa el portapapeles a la vez. Job de Windows: si el robot se detiene, sus workers también.</p>
+          </div>
+
+          <div class="arch-link" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <strong data-i18n="bl1_t">Transacciones</strong> <small data-i18n="bl1_d">una por base: se carga todo o nada</small>
+          </div>
+
+          <div class="lane lane--accent">
+            <h3 data-i18n="lane_md">MotherDuck (DuckDB en la nube)</h3>
+            <ol class="nodes" style="--cols:3">
+              <li class="node"><span class="tile tile--sm" data-icon="motherduck"></span><strong data-i18n="b4t">Staging y maestros</strong><span data-i18n="b4d">Pedidos de la ventana, unidades de medida, precios y datos maestros</span></li>
+              <li class="node"><span class="tile tile--sm" data-icon="sql"></span><strong data-i18n="b5t">SQL con CTEs</strong><span data-i18n="b5d">Importe, fecha de entrega ajustada y estado de cada línea</span></li>
+              <li class="node"><span class="tile tile--sm" data-icon="motherduck"></span><strong data-i18n="b6t">Proyección final</strong><span data-i18n="b6d">Una fila por línea de pedido, validada contra staging</span></li>
+            </ol>
+          </div>
+
+          <div class="arch-link" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <strong data-i18n="bl2_t">Solo lectura</strong> <small data-i18n="bl2_d">el dashboard consulta únicamente la tabla final</small>
+          </div>
+
+          <div class="arch-foot">
+            <div class="lane">
+              <h3 data-i18n="lane_ui">Consumo · Streamlit</h3>
+              <ol class="nodes" style="--cols:2">
+                <li class="node"><span class="tile tile--sm" data-icon="streamlit"></span><strong data-i18n="b7t">Dashboard ejecutivo</strong><span data-i18n="b7d">KPIs, ritmo, brecha acumulada, desgloses y filtros</span></li>
+                <li class="node"><span class="tile tile--sm" data-icon="excel"></span><strong data-i18n="b8t">Exportación a Excel</strong><span data-i18n="b8d">Rango filtrado, hasta 500,000 filas</span></li>
+              </ol>
+            </div>
+            <div class="lane">
+              <h3 data-i18n="lane_ctl">Avisos y control</h3>
+              <ul class="bullets">
+                <li data-i18n="ctl1">Estado correcto, parcial o con error → aviso en Microsoft Teams vía Power Automate.</li>
+                <li data-i18n="ctl2">Código de salida: 0 (correcto o parcial), 1 (error), 2 (SAP ya en uso por otro robot).</li>
+                <li data-i18n="ctl3">Si falla un reporte complementario, la carga continúa y el resultado queda como parcial.</li>
+              </ul>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <section id="parallel" aria-labelledby="h-parallel" data-reveal>
+        <h2 id="h-parallel" data-i18n="sec_parallel">Extracción en paralelo</h2>
+        <figure class="card deps-fig">
+          <figcaption data-i18n="par_intro">Orden de las descargas en SAP. Cada tarea arranca cuando terminan sus dependencias y hay una sesión libre. Esquema sin escala de tiempo.</figcaption>
+          <div class="deps">
+            <div class="deps-col">
+              <h3 data-i18n="par_c1">Arrancan juntas</h3>
+              <ul>
+                <li class="task task--key"><span class="tile tile--xs" data-icon="sap"></span><span data-i18n="t1">Pedidos de la ventana de fechas</span></li>
+                <li class="task"><span class="tile tile--xs" data-icon="sap"></span><span data-i18n="t2">Entregas</span></li>
+              </ul>
+            </div>
+            <div class="deps-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </div>
+            <div class="deps-col">
+              <h3 data-i18n="par_c2">Con la lista de pedidos</h3>
+              <ul>
+                <li class="task"><span class="tile tile--xs" data-icon="sap"></span><span data-i18n="t3">HU por pedido</span><small>× 4</small></li>
+                <li class="task"><span class="tile tile--xs" data-icon="sap"></span><span data-i18n="t4">Unidades de medida</span></li>
+                <li class="task"><span class="tile tile--xs" data-icon="sap"></span><span data-i18n="t5">Precios</span></li>
+              </ul>
+            </div>
+            <div class="deps-arrow deps-arrow--soft" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </div>
+            <div class="deps-col deps-col--opt">
+              <h3 data-i18n="par_c3">Solo si faltan datos</h3>
+              <ul>
+                <li class="task"><span class="tile tile--xs" data-icon="sap"></span><span data-i18n="t6">Ajuste de fecha de entrega</span></li>
+                <li class="task"><span class="tile tile--xs" data-icon="sap"></span><span data-i18n="t7">Maestro de materiales</span></li>
+              </ul>
+            </div>
+          </div>
+          <p class="arch-note" data-i18n="par_note">La lista de pedidos se reparte en 4 partes contiguas y sin huecos, para que el reporte más pesado corra en 4 sesiones a la vez.</p>
+        </figure>
+      </section>
+
+      <section id="dashboard" aria-labelledby="h-dashboard" data-gallery hidden>
+        <h2 id="h-dashboard" data-i18n="sec_shots">Capturas del dashboard</h2>
+        <p data-i18n="shots_intro">Interfaz del dashboard ejecutivo en Streamlit.</p>
+        <div class="shots">
+          <figure>
+            <a href="../assets/img/dashboard/01-indicadores.png" target="_blank" rel="noopener"><img src="../assets/img/dashboard/01-indicadores.png" alt="Captura del dashboard con los indicadores de líneas e importes y sus barras de generado y pendiente." data-i18n-alt="shot1_alt" decoding="async"></a>
+            <figcaption data-i18n="shot1_cap">Indicadores principales: generado vs. pendiente.</figcaption>
+          </figure>
+          <figure>
+            <a href="../assets/img/dashboard/02-ritmo-brecha.png" target="_blank" rel="noopener"><img src="../assets/img/dashboard/02-ritmo-brecha.png" alt="Captura del dashboard con el gráfico de ritmo por periodo y la brecha acumulada." data-i18n-alt="shot2_alt" decoding="async"></a>
+            <figcaption data-i18n="shot2_cap">Ritmo diario, semanal o mensual y brecha acumulada.</figcaption>
+          </figure>
+          <figure>
+            <a href="../assets/img/dashboard/03-desgloses.png" target="_blank" rel="noopener"><img src="../assets/img/dashboard/03-desgloses.png" alt="Captura del dashboard con los desgloses por gerencia y por unidad de negocio." data-i18n-alt="shot3_alt" decoding="async"></a>
+            <figcaption data-i18n="shot3_cap">Desglose por gerencia y unidad de negocio.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="impact" aria-labelledby="h-impact" data-reveal>
+        <h2 id="h-impact"><span data-i18n="pe_impact">El Impacto</span> <small data-i18n="pe_impact_s">Resultados y evidencia</small></h2>
+        <div class="impact-grid">
+          <article class="card kpi" data-spotlight>
+            <p class="kpi-num">−83<small>%</small></p>
+            <p class="kpi-label" data-i18n="kpi_b1_l">tiempo por ejecución (de ~30 min a ~5 min)</p>
+            <p class="kpi-note" data-i18n="kpi_b1_c">Valores aproximados. La revisión manual solo cubría las órdenes con entrega; el RPA cubre todo el flujo.</p>
+            <div class="kpi-viz" aria-hidden="true">
+              <div class="bar-row"><span data-i18n="kpi_manual">Manual</span><span class="bar"><i style="--w:100%" data-bar></i></span><b>~30 min</b></div>
+              <div class="bar-row"><span>RPA</span><span class="bar bar--accent"><i style="--w:16.7%" data-bar data-delay=".25"></i></span><b>~5 min</b></div>
+            </div>
+          </article>
+          <article class="card kpi" data-spotlight>
+            <p class="kpi-num" data-i18n="kpi_b2_n">1 → varias</p>
+            <p class="kpi-label" data-i18n="kpi_b2_l">ejecuciones al día</p>
+            <p class="kpi-note" data-i18n="kpi_b2_c">Por su duración, el proceso manual se hacía solo una vez al día; el RPA puede ejecutarse varias veces.</p>
+          </article>
+        </div>
+        <p data-i18n="pb_impact1">Valores aproximados, estimados a partir de la operación diaria.</p>
+        <p data-i18n="pb_impact2">Además, automatiza de punta a punta la descarga y el cruce de 7 reportes de SAP, y avisa del resultado sin que nadie tenga que revisarlo.</p>
+        <p data-i18n="pb_impact3">Uso actual: el dashboard lo usa la gerencia de Non Food y Supply Chain. A futuro lo verán las demás gerencias, a medida que se trabajen las lógicas que necesita cada una.</p>
+        
+      </section>
+
+      <section id="quality" aria-labelledby="h-quality" data-reveal>
+        <h2 id="h-quality" data-i18n="sec_quality">Calidad de datos y pruebas</h2>
+        <ul class="bullets">
+          <li data-i18n="pb_q1">43 pruebas automatizadas que se ejecutan sin SAP (orquestador, candados y cargas). MotherDuck se reemplaza por una DuckDB local para probar todo el SQL.</li>
+          <li data-i18n="pb_q2">Validación final: si las filas de la proyección no coinciden con las de staging (señal de que un JOIN duplicó líneas), se revierte toda la carga.</li>
+          <li data-i18n="pb_q3">Cada TXT debe ser de la ejecución actual y no estar vacío; el archivo anterior se borra antes de descargar.</li>
+          <li data-i18n="pb_q4">INSERT … BY NAME: las columnas se emparejan por nombre, así un cambio de orden no guarda datos en la columna equivocada.</li>
+          <li data-i18n="pb_q5">Las fechas de la tabla principal se convierten en modo estricto: si una viene mal, el proceso falla antes de cargar datos incorrectos.</li>
+          <li data-i18n="pb_q6">El dashboard exige al menos una gerencia y una clase de documento, valida el rango de fechas y limita la exportación a 500,000 filas.</li>
+        </ul>
+      </section>
+
+      <section id="repo" aria-labelledby="h-repo" data-reveal>
+        <h2 id="h-repo" data-i18n="sec_code">Estructura del código</h2>
+        <ul class="files">
+          <li><code>comun/</code><span data-i18n="rf1">Herramientas reutilizables: configuración, logging, candados, transacciones en MotherDuck, avisos y lector de TXT</span></li>
+          <li><code>comun/sap/</code><span data-i18n="rf2">Conexión a SAP GUI, orquestador y worker</span></li>
+          <li><code>procesos/proyeccion_ot/</code><span data-i18n="rf3">El proceso concreto: configuración, transacciones, lectores, cargas SQL y flujo principal</span></li>
+          <li><code>dashboards/proyeccion_ot/</code><span data-i18n="rf6">Dashboard en Streamlit: consultas, gráficos y componentes en módulos separados</span></li>
+          <li><code>tests/</code><span data-i18n="rf4">Pruebas automatizadas sin SAP</span></li>
+          <li><code>herramientas/</code><span data-i18n="rf7">Script para compilar el .exe con PyInstaller</span></li>
+          <li><code>requirements.txt</code><span data-i18n="rf5">Dependencias del robot (el dashboard tiene las suyas)</span></li>
+        </ul>
+        <p class="note" data-i18n="deps_title">Dependencias principales</p>
+        <div class="chips">
+          <span class="chip">polars</span><span class="chip">duckdb</span><span class="chip">pyarrow</span><span class="chip">pywin32</span>
+          <span class="chip">pyperclip</span><span class="chip">python-dotenv</span><span class="chip">requests</span><span class="chip">streamlit</span><span class="chip">pandas</span><span class="chip">plotly</span><span class="chip">PyInstaller</span>
+        </div>
+      </section>
+
+      <section id="limits" aria-labelledby="h-limits" data-reveal>
+        <h2 id="h-limits"><span data-i18n="pe_limits">Limitaciones</span> <small data-i18n="pe_limits_s">y siguientes pasos</small></h2>
+        <p data-i18n="pb_limits">La extracción depende de SAP GUI en Windows, por lo que no es reproducible fuera del entorno de la empresa.</p>
+        <ul class="bullets">
+          <li data-i18n="pb_l1">La lectura por posición depende de que las variantes de SAP no cambien; por eso están protegidas.</li>
+          <li data-i18n="pb_l2">El portapapeles se comparte con el usuario: el equipo no debe usarse mientras el robot descarga.</li>
+          <li data-i18n="pb_l3">El historial crece sin límite; propongo una política de retención.</li>
+        </ul>
+      </section>
+
+      <nav aria-label="Proyectos" data-reveal>
+        <a class="card next-card" href="gcp-pipeline.html" data-spotlight>
+          <small data-i18n="p_prev">Proyecto anterior</small>
+          <strong><span data-i18n="pa_title">Pipeline de datos en GCP</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></strong>
+        </a>
+      </nav>
+    </article>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span data-i18n="footer">© Renzo Tinta Mendoza · Los resultados publicados provienen de mediciones propias.</span>
+    <a href="#main"><span data-i18n="back_top">Volver arriba</span> <span aria-hidden="true">↑</span></a>
+  </div>
+</footer>
+
+<script src="../assets/js/icons.js"></script>
+<script src="../assets/js/i18n/common.js"></script>
+<script src="../assets/js/i18n/sap-motherduck-pipeline.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="../assets/vendor/gsap/gsap.min.js"></script>
+<script src="../assets/vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="../assets/vendor/gsap/SplitText.min.js"></script>
+<script src="../assets/js/motion.js"></script>
+</body>
+</html>

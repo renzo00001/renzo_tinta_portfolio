@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Renzo Tinta · Junior Data Engineer</title>
+<meta name="description" content="Portafolio de Renzo Tinta, Junior Data Engineer: pipelines en GCP, plataforma de datos con DuckDB/MotherDuck y automatización con Power Platform.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#07090D" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F6F7F9" media="(prefers-color-scheme: light)">
+<script>
+  (function () {
+    var d = document.documentElement; d.classList.add("js");
+    try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") d.dataset.theme = t; } catch (e) {}
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      d.classList.add("motion");
+      setTimeout(function () { if (!window.__motionReady) d.classList.remove("motion"); }, 2500);
+    }
+  })();
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230F766E'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='monospace' font-size='14' font-weight='700' fill='white'%3E%3E_%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="skip">Saltar al contenido</a>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">&gt;_</span><span data-i18n="brand">Renzo Tinta</span></a>
+    <nav class="nav" id="site-nav" aria-label="Principal" data-i18n-aria="nav_label" data-spy>
+      <span class="nav-indicator" aria-hidden="true"></span>
+      <a href="#about" data-i18n="nav_about">Sobre mí</a>
+      <a href="#stack" data-i18n="nav_stack">Stack</a>
+      <a href="#projects" data-i18n="nav_projects">Proyectos</a>
+      <a href="#approach" data-i18n="nav_approach">Enfoque</a>
+      <a href="#experience" data-i18n="nav_experience">Experiencia</a>
+      <a href="#contact" data-i18n="nav_contact">Contacto</a>
+    </nav>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Idioma" data-i18n-aria="lang_label" data-active="es">
+        <span class="seg-thumb" aria-hidden="true"></span>
+        <button type="button" data-lang="es" aria-pressed="true" lang="es">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+      <button type="button" class="icon-btn theme-btn" id="theme" aria-label="Cambiar tema" data-i18n-aria="theme_label">
+        <svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú"><span aria-hidden="true"></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <canvas class="hero-flow" id="hero-flow" aria-hidden="true"></canvas>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <p class="status-pill" data-reveal="hero"><span class="pulse" aria-hidden="true"></span><span data-i18n="hero_status">Abierto a oportunidades · Lima, Perú</span></p>
+        <h1 class="hero-title" id="hero-title" data-i18n="hero_name">Renzo Walter Tinta Mendoza</h1>
+        <p class="hero-role" data-reveal="hero"><span class="role-tag" data-i18n="hero_role">Junior Data Engineer</span></p>
+        <p class="hero-lead" data-reveal="hero" data-i18n="hero_lead">Automatizo procesos operativos y construyo pipelines de datos entre Microsoft Power Platform y Google Cloud. Mi foco: pasar del análisis y la automatización <em>a la ingeniería de datos</em>.</p>
+        <div class="hero-actions" data-reveal="hero">
+          <a class="btn btn--primary" href="#projects" data-magnetic><span data-i18n="cta_projects">Ver proyectos</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn" href="https://github.com/renzo00001" target="_blank" rel="noopener"><span class="tile tile--xs" data-icon="github"></span>GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/renzo-tinta-data/" target="_blank" rel="noopener"><span class="tile tile--xs" data-icon="linkedin"></span>LinkedIn</a>
+        </div>
+      </div>
+
+      <!-- Órbita: herramientas principales alrededor del avatar (decorativa; el listado accesible está en Stack) -->
+      <div class="hero-visual" aria-hidden="true" data-reveal="hero">
+        <div class="orbit">
+          <div class="orbit-ring"></div>
+          <div class="orbit-ring orbit-ring--inner"></div>
+          <div class="orbit-track">
+            <span class="orbit-item" style="--i:0"><span class="orbit-inner"><span class="tile tile--md" data-icon="python"></span><span class="orbit-label">Python</span></span></span>
+            <span class="orbit-item" style="--i:1"><span class="orbit-inner"><span class="tile tile--md" data-icon="polars"></span><span class="orbit-label">Polars</span></span></span>
+            <span class="orbit-item" style="--i:2"><span class="orbit-inner"><span class="tile tile--md" data-icon="sql"></span><span class="orbit-label">SQL</span></span></span>
+            <span class="orbit-item" style="--i:3"><span class="orbit-inner"><span class="tile tile--md" data-icon="pandas"></span><span class="orbit-label">pandas</span></span></span>
+            <span class="orbit-item" style="--i:4"><span class="orbit-inner"><span class="tile tile--md" data-icon="duckdb"></span><span class="orbit-label">DuckDB</span></span></span>
+            <span class="orbit-item" style="--i:5"><span class="orbit-inner"><span class="tile tile--md" data-icon="bigquery"></span><span class="orbit-label">BigQuery</span></span></span>
+            <span class="orbit-item" style="--i:6"><span class="orbit-inner"><span class="tile tile--md" data-icon="excel"></span><span class="orbit-label">Excel</span></span></span>
+          </div>
+          <div class="avatar-core">
+            <svg viewBox="0 0 200 200">
+              <defs><clipPath id="av"><circle cx="100" cy="100" r="100"/></clipPath></defs>
+              <g clip-path="url(#av)">
+                <path d="M20 215c4-46 32-68 80-68s76 22 80 68z" fill="#0F766E"/>
+                <path d="M78 147l22 22 22-22z" fill="#F4F7F8"/>
+                <rect x="88" y="114" width="24" height="36" rx="10" fill="#C98F6B"/>
+                <ellipse cx="100" cy="90" rx="34" ry="38" fill="#D9A07A"/>
+                <path d="M64 86c-2-30 16-48 38-48 24 0 38 18 34 46-4-14-12-22-24-24-14 4-32 4-42 6-4 4-6 12-6 20z" fill="#1C232B"/>
+                <circle cx="87" cy="94" r="3.2" fill="#1C232B"/><circle cx="113" cy="94" r="3.2" fill="#1C232B"/>
+                <path d="M90 110q10 8 20 0" fill="none" stroke="#1C232B" stroke-width="3" stroke-linecap="round"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="scroll-cue" href="#results"><span data-i18n="scroll_cue">Explorar</span><i aria-hidden="true"></i></a>
+  </section>
+
+  <!-- RESULTADOS MEDIDOS -->
+  <section class="kpis" id="results" aria-labelledby="kpis-title">
+    <div class="container">
+      <h2 class="kpis-head" id="kpis-title" data-i18n="kpi_label">Resultados medidos</h2>
+      <div class="kpi-grid" data-stagger>
+        <article class="card kpi" data-spotlight>
+          <p class="kpi-num"><span class="sr-only">150,000</span><span data-count="150000" aria-hidden="true">150,000</span></p>
+          <p class="kpi-label" data-i18n="kpi1_l">registros procesados en 4 minutos</p>
+          <p class="kpi-note" data-i18n="kpi1_c">Pipeline en GCP, medido desde el disparo en Power Automate hasta el fin en Cloud Functions.</p>
+          <div class="kpi-viz" aria-hidden="true">
+            <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </article>
+        <article class="card kpi" data-spotlight>
+          <p class="kpi-num">−87<small>%</small></p>
+          <p class="kpi-label" data-i18n="kpi2_l">tiempo de procesamiento de reportes operativos (de 2 h a 15 min)</p>
+          <p class="kpi-note" data-i18n="kpi2_c">Automatización end-to-end del pipeline en GCP.</p>
+          <div class="kpi-viz" aria-hidden="true">
+            <div class="bar-row"><span data-i18n="kpi_before">Antes</span><span class="bar"><i style="--w:100%" data-bar></i></span><b>2 h</b></div>
+            <div class="bar-row"><span data-i18n="kpi_now">Ahora</span><span class="bar bar--accent"><i style="--w:12.5%" data-bar data-delay=".25"></i></span><b>15 min</b></div>
+          </div>
+        </article>
+        <article class="card kpi" data-spotlight>
+          <p class="kpi-num">−25<small>%</small></p>
+          <p class="kpi-label" data-i18n="kpi3_l">errores de registro en reportes de proveedores</p>
+          <p class="kpi-note" data-i18n="kpi3_c">Medido comparando antes y después de centralizar los reportes en PowerApps.</p>
+          <div class="kpi-viz" aria-hidden="true">
+            <div class="bar-row"><span data-i18n="kpi_before">Antes</span><span class="bar"><i style="--w:100%" data-bar></i></span><b></b></div>
+            <div class="bar-row"><span data-i18n="kpi_after">Después</span><span class="bar bar--accent"><i style="--w:75%" data-bar data-delay=".25"></i></span><b>−25 %</b></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 SOBRE MÍ -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <header class="section-head" data-reveal>
+        <p class="section-index" data-i18n="about_eyebrow">01 · Perfil</p>
+        <h2 id="about-title" data-i18n="about_title">Sobre mí</h2>
+      </header>
+      <div class="about-grid">
+        <div class="about-copy" data-reveal>
+          <p data-i18n="about_p1">Trabajo en Cencosud (retail) desde julio de 2022 como Auxiliar de Control y Desempeño, donde automatizo procesos operativos con arquitecturas híbridas que integran Microsoft Power Platform con Google Cloud.</p>
+          <p data-i18n="about_p2">Mi objetivo es evolucionar de la automatización y el análisis de datos hacia la ingeniería de datos. Estoy aprendiendo Airflow y Microsoft Fabric, y llevo un 60 % de la Especialización en Ingeniería de Datos de Coursera.</p>
+          <h3 class="sub-head" style="margin-top: var(--s-6)" data-i18n="evo_title">Mi evolución</h3>
+          <ol class="evo" data-stagger>
+            <li><strong data-i18n="evo1">Automatización</strong><span data-i18n="evo1d">Power Automate, PowerApps y VBA</span></li>
+            <li><strong data-i18n="evo2">Datos y reporting</strong><span data-i18n="evo2d">Power BI, DuckDB y Polars</span></li>
+            <li class="is-now" data-now="Enfoque actual" data-i18n-attr="data-now:evo_now"><strong data-i18n="evo3">Ingeniería de datos</strong><span data-i18n="evo3d">Pipelines en GCP y MotherDuck</span></li>
+          </ol>
+        </div>
+        <dl class="facts card" data-reveal>
+          <div><dt data-i18n="fact_loc">Ubicación</dt><dd data-i18n="fact_loc_v">Lima, Perú</dd></div>
+          <div><dt data-i18n="fact_avail">Disponibilidad</dt><dd data-i18n="fact_avail_v">Remoto · Presencial · Híbrido · Reubicación</dd></div>
+          <div><dt data-i18n="fact_target">Puestos objetivo</dt><dd data-i18n="fact_target_v">Data Engineer · Analytics Engineer · BI Developer</dd></div>
+          <div><dt data-i18n="fact_sect">Sectores de interés</dt><dd data-i18n="fact_sect_v">Logística · Retail · Finanzas</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 STACK -->
+  <section class="section" id="stack" aria-labelledby="stack-title">
+    <div class="container">
+      <header class="section-head" data-reveal>
+        <p class="section-index" data-i18n="stack_eyebrow">02 · Tecnologías</p>
+        <h2 id="stack-title" data-i18n="stack_title">Stack técnico</h2>
+        <p data-i18n="stack_intro">Cada tecnología se clasifica según el nivel de experiencia real.</p>
+      </header>
+
+      <h3 class="sub-head" data-i18n="core_title">Herramientas principales · práctica real</h3>
+      <ul class="core-grid" data-stagger>
+        <li class="card core-item" data-tilt data-spotlight><div class="core-inner"><span class="tile tile--lg" data-icon="python"></span><h4>Python</h4><p data-i18n="core_python">Extracción, limpieza y carga de datos: desde SAP y archivos Excel hasta la nube.</p></div></li>
+        <li class="card core-item" data-tilt data-spotlight><div class="core-inner"><span class="tile tile--lg" data-icon="polars"></span><h4>Polars</h4><p data-i18n="core_polars">Lectura eficiente de múltiples archivos sin saturar memoria; limpieza y deduplicación.</p></div></li>
+        <li class="card core-item" data-tilt data-spotlight><div class="core-inner"><span class="tile tile--lg" data-icon="sql"></span><h4>SQL</h4><p data-i18n="core_sql">Transformaciones con CTEs, cargas incrementales y consultas programadas.</p></div></li>
+        <li class="card core-item" data-tilt data-spotlight><div class="core-inner"><span class="tile tile--lg" data-icon="pandas"></span><h4>pandas</h4><p data-i18n="core_pandas">Manipulación de DataFrames en Python, junto a Polars y NumPy.</p></div></li>
+        <li class="card core-item" data-tilt data-spotlight><div class="core-inner"><span class="tile tile--lg" data-icon="duckdb"></span><h4>DuckDB</h4><p data-i18n="core_duckdb">Consolidación local para análisis ad hoc y almacén en la nube con MotherDuck.</p></div></li>
+        <li class="card core-item" data-tilt data-spotlight><div class="core-inner"><span class="tile tile--lg" data-icon="bigquery"></span><h4>BigQuery</h4><p data-i18n="core_bigquery">Almacén del pipeline en GCP: tabla de rechazos, control de duplicados y consultas programadas.</p></div></li>
+        <li class="card core-item" data-tilt data-spotlight><div class="core-inner"><span class="tile tile--lg" data-icon="excel"></span><h4>Excel</h4><p data-i18n="core_excel">Excel y VBA: conversión de reportes y automatización con macros.</p></div></li>
+        <li class="card core-item core-more"><a href="#more-tools"><span class="core-more-plus" aria-hidden="true">+</span><span data-i18n="core_more">Ver más herramientas</span></a></li>
+      </ul>
+
+      <h3 class="sub-head" id="more-tools" data-i18n="eco_title">Más herramientas</h3>
+      <div class="legend" aria-label="Leyenda" data-i18n-aria="legend_label">
+        <span><i class="chip chip--practice" aria-hidden="true">&nbsp;</i> <b data-i18n="lg_practice">Práctica real</b></span>
+        <span><i class="chip chip--learning" aria-hidden="true">&nbsp;</i> <b data-i18n="lg_learning">En aprendizaje</b></span>
+        <span><i class="chip chip--explored" aria-hidden="true">&nbsp;</i> <b data-i18n="lg_explored">Explorada</b></span>
+      </div>
+      <div class="eco" data-stagger>
+        <div class="eco-row"><h4 data-i18n="cat_cloud">Cloud</h4>
+          <div class="chips"><span class="chip chip--practice">Cloud Storage</span><span class="chip chip--practice">BigLake</span><span class="chip chip--practice">Cloud Functions</span><span class="chip chip--practice">Dataflow</span><span class="chip chip--learning">Microsoft Fabric</span></div></div>
+        <div class="eco-row"><h4 data-i18n="cat_db">Bases de datos</h4>
+          <div class="chips"><span class="chip chip--practice">MotherDuck</span><span class="chip chip--practice">PostgreSQL</span></div></div>
+        <div class="eco-row"><h4 data-i18n="cat_proc">Procesamiento y orquestación</h4>
+          <div class="chips"><span class="chip chip--practice">NumPy</span><span class="chip chip--learning">Airflow</span></div></div>
+        <div class="eco-row"><h4 data-i18n="cat_bi">BI y visualización</h4>
+          <div class="chips"><span class="chip chip--practice">Power BI</span><span class="chip chip--explored">Streamlit</span></div></div>
+        <div class="eco-row"><h4 data-i18n="cat_auto">Automatización</h4>
+          <div class="chips"><span class="chip chip--practice">Power Automate</span><span class="chip chip--practice">PowerApps</span><span class="chip chip--practice">APIs / Webhooks</span></div></div>
+        <div class="eco-row"><h4 data-i18n="cat_dev">Herramientas de desarrollo</h4>
+          <div class="chips"><span class="chip chip--practice">Git</span><span class="chip chip--practice">SharePoint</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 PROYECTOS -->
+  <section class="section" id="projects" aria-labelledby="projects-title">
+    <div class="container">
+      <header class="section-head" data-reveal>
+        <p class="section-index" data-i18n="proj_eyebrow">03 · Trabajo destacado</p>
+        <h2 id="projects-title" data-i18n="proj_title">Proyectos destacados</h2>
+        <p data-i18n="proj_intro">Cada proyecto tiene su propia hoja con el problema, el proceso, la solución, la arquitectura y el impacto.</p>
+      </header>
+      <div class="projects-grid" data-stagger>
+        <article class="card project-card" data-spotlight aria-labelledby="pa-title">
+          <div class="project-top"><span class="project-index">01</span><span class="badge badge--ok" data-i18n="st_ok">Implementado y verificado</span></div>
+          <h3 id="pa-title"><a href="projects/gcp-pipeline.html" data-i18n="pa_title">Pipeline de datos en GCP</a></h3>
+          <p data-i18n="pa_sum">Automatiza la ingesta de un reporte operativo que se genera 4 veces al día: desde SharePoint hasta BigQuery, con control de duplicados, tabla de rechazos y aviso por correo. Consultas programadas mantienen actualizado el dashboard. En producción en Cencosud.</p>
+          <ol class="chain" aria-label="Flujo del pipeline" data-i18n-aria="pa_chain_label">
+            <li><span class="tile tile--sm" data-icon="excel"></span><span class="chain-label">Excel + VBA</span></li>
+            <li><span class="tile tile--sm" data-icon="powerautomate"></span><span class="chain-label">Power Automate</span></li>
+            <li><span class="tile tile--sm" data-icon="gcs"></span><span class="chain-label">Cloud Storage</span></li>
+            <li><span class="tile tile--sm" data-icon="dataflow"></span><span class="chain-label">Dataflow</span></li>
+            <li><span class="tile tile--sm" data-icon="bigquery"></span><span class="chain-label">BigQuery</span></li>
+            <li><span class="tile tile--sm" data-icon="powerbi"></span><span class="chain-label">Power BI</span></li>
+          </ol>
+          <dl class="project-metrics">
+            <div><dt data-i18n="pa_m1_t">Registros procesados</dt><dd data-i18n="pa_m1_v">150,000 en 4 min</dd></div>
+            <div><dt data-i18n="pa_m2_t">Reportes operativos</dt><dd data-i18n="pa_m2_v">2 h → 15 min</dd></div>
+          </dl>
+          <a class="btn btn--primary" href="projects/gcp-pipeline.html" data-magnetic><span data-i18n="p_case">Ver caso de estudio</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+
+        <article class="card project-card" data-spotlight aria-labelledby="pb-title">
+          <div class="project-top"><span class="project-index">02</span><span class="badge badge--ok" data-i18n="st_prod">En producción</span></div>
+          <h3 id="pb-title"><a href="projects/sap-motherduck-pipeline.html" data-i18n="pb_title">Pipeline de datos de SAP a MotherDuck con extracción paralela</a></h3>
+          <p data-i18n="pb_sum">Automatiza la descarga de 7 reportes de SAP en sesiones paralelas, carga los datos en MotherDuck con transacciones y validaciones, y genera la proyección operativa diaria que consume un dashboard en Streamlit.</p>
+          <ol class="chain" aria-label="Flujo del pipeline" data-i18n-aria="pb_chain_label">
+            <li><span class="tile tile--sm" data-icon="sap"></span><span class="chain-label">SAP</span></li>
+            <li><span class="tile tile--sm" data-icon="python"></span><span class="chain-label">Python</span></li>
+            <li><span class="tile tile--sm" data-icon="polars"></span><span class="chain-label">Polars</span></li>
+            <li><span class="tile tile--sm" data-icon="motherduck"></span><span class="chain-label">MotherDuck</span></li>
+            <li><span class="tile tile--sm" data-icon="streamlit"></span><span class="chain-label">Streamlit</span></li>
+          </ol>
+          <dl class="project-metrics">
+            <div><dt data-i18n="pb_m1_t">En uso por</dt><dd data-i18n="pb_m1_v">Non Food y Supply Chain</dd></div>
+            <div><dt data-i18n="pb_m2_t">Tiempo por ejecución</dt><dd data-i18n="pb_m2_v">~30 min → ~5 min</dd></div>
+          </dl>
+          <a class="btn btn--primary" href="projects/sap-motherduck-pipeline.html" data-magnetic><span data-i18n="p_case">Ver caso de estudio</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ENFOQUE -->
+  <section class="section" id="approach" aria-labelledby="approach-title">
+    <div class="container">
+      <header class="section-head" data-reveal>
+        <p class="section-index" data-i18n="ap_eyebrow">04 · Forma de trabajar</p>
+        <h2 id="approach-title" data-i18n="ap_title">Enfoque de ingeniería</h2>
+        <p data-i18n="ap_intro">Principios que aplico, cada uno con un ejemplo de mis proyectos.</p>
+      </header>
+      <div class="bento" data-stagger>
+        <article class="card" data-spotlight>
+          <span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="100" d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path pathLength="100" d="M9 12l2 2 4-4"/></svg></span>
+          <h3 data-i18n="ap1">Calidad de datos</h3><p data-i18n="ap1d">Validación de fechas, tipos y errores de fórmulas antes de cargar; los registros inválidos van a una tabla de rechazos con aviso por correo.</p>
+        </article>
+        <article class="card" data-spotlight>
+          <span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="100" d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+          <h3 data-i18n="ap2">Automatización</h3><p data-i18n="ap2d">Flujos de punta a punta, del archivo en SharePoint hasta BigQuery y Power BI, sin pasos manuales.</p>
+        </article>
+        <article class="card" data-spotlight>
+          <span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="100" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path pathLength="100" d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+          <h3 data-i18n="ap3">Documentación</h3><p data-i18n="ap3d">En progreso: cada proyecto se documenta con el marco Problema → Proceso → Solución → Impacto.</p>
+        </article>
+        <article class="card" data-spotlight>
+          <span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><circle pathLength="100" cx="12" cy="12" r="8"/><circle pathLength="100" cx="12" cy="12" r="3"/><path pathLength="100" d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+          <h3 data-i18n="ap4">Resolución de problemas</h3><p data-i18n="ap4d">Costo y memoria como restricciones: BigLake para optimizar el almacenamiento y Polars para procesar varios archivos sin saturar memoria.</p>
+        </article>
+        <article class="card" data-spotlight>
+          <span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect pathLength="100" x="3" y="3" width="6" height="6" rx="1.5"/><rect pathLength="100" x="15" y="15" width="6" height="6" rx="1.5"/><path pathLength="100" d="M9 6h4a3 3 0 0 1 3 3v6"/></svg></span>
+          <h3 data-i18n="ap5">Diseño de pipelines</h3><p data-i18n="ap5d">Cargas repetibles: borrar e insertar por fecha o rango, dentro de transacciones, para poder reprocesar sin duplicar.</p>
+        </article>
+        <article class="card" data-spotlight>
+          <span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="100" d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5 2.5-2.5z"/></svg></span>
+          <h3 data-i18n="ap6">Mantenibilidad</h3><p data-i18n="ap6d">En mejora: agregar README, pruebas y diagramas a los repositorios.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 EXPERIENCIA -->
+  <section class="section" id="experience" aria-labelledby="exp-title">
+    <div class="container">
+      <header class="section-head" data-reveal>
+        <p class="section-index" data-i18n="exp_eyebrow">05 · Trayectoria</p>
+        <h2 id="exp-title" data-i18n="exp_title">Experiencia</h2>
+        <p data-i18n="exp_intro">Actividades separadas en automatización, reporting y datos.</p>
+      </header>
+      <div class="timeline" data-timeline>
+        <span class="timeline-track" aria-hidden="true"><span class="timeline-fill"></span></span>
+        <article class="card tl-item" data-reveal>
+          <header class="tl-head">
+            <div>
+              <p class="tl-meta" data-i18n="exp_meta">Julio 2022 – Presente · Cencosud S.A. (retail) · Lima, Perú</p>
+              <h3 data-i18n="exp_role">Auxiliar de Control y Desempeño</h3>
+            </div>
+          </header>
+          <div class="tl-cols">
+            <div><h4><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg><span data-i18n="exp_auto">Automatización</span></h4>
+              <ul class="bullets">
+                <li data-i18n="exp_a1">Pipeline end-to-end entre Microsoft y Google (Power Automate, Cloud Storage, BigLake, Cloud Functions, Dataflow, BigQuery) que migró reportes de archivos locales a la nube, con ingesta de Excel vía Python (Polars) y VBA y monitoreo automático de errores.</li>
+                <li data-i18n="exp_a2">App en PowerApps para que 2 áreas gestionen la lista de correos de contacto por proveedor sin depender de mi equipo.</li>
+              </ul></div>
+            <div><h4><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span data-i18n="exp_report">Reporting</span></h4>
+              <ul class="bullets">
+                <li data-i18n="exp_r1">Desarrollo y mantengo 3 dashboards de Power BI para el seguimiento de indicadores de gestión del área.</li>
+                <li data-i18n="exp_r2">Consumo en tiempo real vía DirectQuery por múltiples usuarios.</li>
+                <li data-i18n="exp_r3">Reportes de proveedores centralizados en PowerApps: −25 % de errores de registro, medido antes y después.</li>
+              </ul></div>
+            <div><h4><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><span data-i18n="exp_data">Datos</span></h4>
+              <ul class="bullets">
+                <li data-i18n="exp_d1">Procesamiento de reportes operativos: de 2 horas a 15 minutos (−87 %).</li>
+                <li data-i18n="exp_d2">Polars para leer múltiples archivos sin saturar memoria.</li>
+                <li data-i18n="exp_d3">DuckDB como capa de consolidación local para cruzar fuentes y resolver análisis ad hoc.</li>
+              </ul></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="edu" data-stagger>
+        <h3 class="sub-head edu-title" data-i18n="edu_title">Formación</h3>
+        <article class="card">
+          <span class="who">Coursera</span>
+          <h4 data-i18n="edu1">Especialización en Ingeniería de Datos</h4>
+          <span class="state" data-i18n="edu1s">60 % completado</span>
+          <span class="bar bar--accent" aria-hidden="true"><i style="--w:60%" data-bar></i></span>
+        </article>
+        <article class="card">
+          <span class="who">ISIL</span>
+          <h4 data-i18n="edu2">Sistemas de Información</h4>
+          <span class="state" data-i18n="edu2s">No culminado</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 CONTACTO -->
+  <section class="section contact" id="contact" aria-labelledby="contact-title">
+    <div class="container contact-grid">
+      <div>
+        <header class="section-head" data-reveal>
+          <p class="section-index" data-i18n="ct_eyebrow">06 · Conversemos</p>
+          <h2 id="contact-title" data-i18n="ct_title">Contacto</h2>
+          <p data-i18n="ct_intro">Abierto a conversar sobre oportunidades en ingeniería de datos.</p>
+        </header>
+        <ul class="contact-links" data-stagger>
+          <li><a class="contact-link" href="https://github.com/renzo00001" target="_blank" rel="noopener"><span class="tile tile--md" data-icon="github"></span><span><strong>GitHub</strong><small>renzo00001</small></span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></li>
+          <li><a class="contact-link" href="https://www.linkedin.com/in/renzo-tinta-data/" target="_blank" rel="noopener"><span class="tile tile--md" data-icon="linkedin"></span><span><strong>LinkedIn</strong><small>renzo-tinta-data</small></span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></li>
+        </ul>
+      </div>
+      <form class="form card" id="contact-form" novalidate data-reveal>
+        <label class="field"><span data-i18n="f_name">Nombre</span><input type="text" name="name" autocomplete="name" required></label>
+        <label class="field"><span data-i18n="f_email">Tu correo</span><input type="email" name="email" autocomplete="email" required></label>
+        <label class="field"><span data-i18n="f_msg">Mensaje</span><textarea name="message" required></textarea></label>
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn--primary" type="submit" id="send"><span data-i18n="f_send">Enviar mensaje</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span data-i18n="footer">© Renzo Tinta Mendoza · Los resultados publicados provienen de mediciones propias.</span>
+    <a href="#top"><span data-i18n="back_top">Volver arriba</span> <span aria-hidden="true">↑</span></a>
+  </div>
+</footer>
+
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/i18n/common.js"></script>
+<script src="assets/js/i18n/home.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/contact-form.js"></script>
+<script src="assets/js/hero-flow.js"></script>
+<script src="assets/vendor/gsap/gsap.min.js"></script>
+<script src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/gsap/SplitText.min.js"></script>
+<script src="assets/js/motion.js"></script>
+</body>
+</html>
