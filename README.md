@@ -1,11 +1,12 @@
 # Renzo Tinta · Portfolio
 
-Portafolio de Junior Data Engineer con pipelines en Google Cloud y SAP/MotherDuck, experiencia en automatización y resultados medidos. Sitio estático, sin compilación, con versiones ES/EN y temas claro y oscuro.
+Portafolio de Junior Data Engineer con casos de automatización RPA, ingesta de datos, SAP, MotherDuck y BigQuery. Sitio estático, sin compilación, con versiones ES/EN y temas claro y oscuro.
 
 ## Contenido
 
 - `index.html`: perfil, resultados, proyectos, experiencia y contacto.
-- `projects/`: casos de estudio con arquitectura, contribución y limitaciones.
+- `projects/`: casos RPA Staging y RPA OT con contexto, solución, impacto y limitaciones.
+- `assets/diagrams/`: mapas interactivos de Archify en español e inglés.
 - `assets/`: estilos, traducciones y JavaScript.
 - `404.html`: página de error.
 - `privacy.html`: privacidad y uso del sitio.
